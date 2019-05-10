@@ -7,7 +7,8 @@ namespace ImpHunter {
         PhysicsObject carriage, barrel;
 
         // The whole cannon wants to have an acceleration instead of just its children.
-        Vector2 acceleration; 
+        Vector2 acceleration;
+		float friction = 0.99f;
         
         /// <summary>
         /// Returns / sets the acceleration of the cannon.
@@ -51,15 +52,64 @@ namespace ImpHunter {
         /// <param name="inputHelper"></param>
         public override void HandleInput(InputHelper inputHelper) {
             base.HandleInput(inputHelper);
-        }
 
-        /// <summary>
-        /// Moves the cannon based on an acceleration, slowing it down with a friction until it comes to a full stop.
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime) {
+			if(inputHelper.IsKeyDown(Keys.A) || inputHelper.IsKeyDown(Keys.Left))
+			{
+				acceleration = new Vector2(-1f, 0);
+			}
+
+			if (inputHelper.IsKeyDown(Keys.D) || inputHelper.IsKeyDown(Keys.Right))
+			{
+				acceleration = new Vector2(1f, 0);
+			}
+
+			if(!inputHelper.IsKeyDown(Keys.D) && !inputHelper.IsKeyDown(Keys.A)
+				&& !inputHelper.IsKeyDown(Keys.Left) && !inputHelper.IsKeyDown(Keys.Right))
+			{
+				acceleration = new Vector2(0, 0);
+			}
+
+			/*
+			///////////////////////LINKER KANT CORRECT
+			if (inputHelper.MousePosition.X <= ImpHunter.Screen.X / 2)
+			{
+				barrel.Angle = (float) Math.Atan2(barrel.Position.Y - inputHelper.MousePosition.Y, -1 * (barrel.Position.X - inputHelper.MousePosition.X));
+			} else if(inputHelper.MousePosition.X > ImpHunter.Screen.X/2)
+			{
+				//barrel.Angle = (float) Math.Atan2(barrel.Position.X - inputHelper.MousePosition.X, -1 * (barrel.Position.Y - inputHelper.MousePosition.Y));
+				barrel.Angle = -1 * (float) (Math.Atan2(barrel.Position.Y - inputHelper.MousePosition.Y, -1 * (barrel.Position.X - inputHelper.MousePosition.X)) + 9.42);
+			}
+			*/
+			//barrel.Angle = inputHelper.MousePosition - barrel.Origin;
+			/*if (inputHelper.MousePosition.X <= ImpHunter.Screen.X / 2)
+			{
+				barrel.OffsetDegrees = (float)(Math.Atan2(inputHelper.MousePosition.Y - barrel.Origin.Y, inputHelper.MousePosition.X - barrel.Origin.X) * (180 / 3.14));
+			} else if (inputHelper.MousePosition.X > ImpHunter.Screen.X / 2)
+			{
+				barrel.Angle = (float)(Math.Atan2(inputHelper.MousePosition.Y - barrel.Origin.Y, inputHelper.MousePosition.X - barrel.Origin.X));
+			}*/
+			//barrel.OffsetDegrees = (float)(Math.Atan2(inputHelper.MousePosition.Y - barrel.Position.Y, inputHelper.MousePosition.X - barrel.Position.X) * (180/3.14));
+			//barrel.Angle = (float)Math.Atan2(inputHelper.MousePosition.Y-barrel.Position.Y, inputHelper.MousePosition.X-barrel.Position.X);
+			//barrel.Angle = (float)Math.Atan2(inputHelper.MousePosition.Y,-inputHelper.MousePosition.X);
+			//barrel.Angle = (float)inputHelper.MousePosition;
+			
+		}
+
+		/// <summary>
+		/// Moves the cannon based on an acceleration, slowing it down with a friction until it comes to a full stop.
+		/// </summary>
+		/// <param name="gameTime"></param>
+		public override void Update(GameTime gameTime) {
             base.Update(gameTime);
-        }
+
+			velocity += acceleration;
+			velocity *= friction;
+
+			if (velocity.X < 10 && acceleration.X == 0 && velocity.X > -10)
+			{
+				velocity.X = 0;
+			}
+		}
         
         /// <summary>
         /// Checks wheter the cannon collides with an object horizontally and bounces it when it does.

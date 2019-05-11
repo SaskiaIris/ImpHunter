@@ -88,7 +88,17 @@ namespace ImpHunter {
             if (inputHelper.MouseLeftButtonPressed() && shootTimer > SHOOT_COOLDOWN) {
                 crosshair.Expand(SHOOT_COOLDOWN);
                 shootTimer = 0;
-				this.balls.Add(new CannonBall(new Vector2(cannon.Position.X, cannon.Position.Y - cannon.Barrel.Height/2 - 30), rotationVectorBarrel));
+				//this.balls.Add(new CannonBall(new Vector2(cannon.Position.X, cannon.Position.Y - cannon.Barrel.Height/2 - 30), rotationVectorBarrel));
+				//this.balls.Add(new CannonBall(new Vector2(cannon.Position.X + cannon.Barrel.Angle * cannon.Barrel.Width, cannon.Position.Y + cannon.Barrel.Angle * cannon.Barrel.Height), rotationVectorBarrel));
+				//this.balls.Add(new CannonBall(new Vector2(cannon.Position.X - ((cannon.Barrel.Width/2) / cannon.Barrel.Angle), cannon.Position.Y -((cannon.Barrel.Height/2)/cannon.Barrel.Angle)), rotationVectorBarrel * 0.5f));
+				//this.balls.Add(new CannonBall(cannon.Barrel.GlobalPosition+rotationVectorBarrel*cannon.Barrel.Height,rotationVectorBarrel));
+				Vector2 angDirection = new Vector2((float)Math.Cos(cannon.Barrel.Angle-1.57), (float)Math.Sin(cannon.Barrel.Angle-1.57));
+				Vector2 cannonBallPos = cannon.Barrel.GlobalPosition + angDirection * (cannon.Barrel.Height-5);
+				
+				Vector2 direction = crosshair.GlobalPosition - cannon.GlobalPosition;
+				direction.Normalize();
+
+				this.balls.Add(new CannonBall(cannonBallPos, direction));
 			}
 
 			if(inputHelper.KeyPressed(Keys.Space))

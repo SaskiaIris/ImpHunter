@@ -67,32 +67,7 @@ namespace ImpHunter {
 				&& !inputHelper.IsKeyDown(Keys.Left) && !inputHelper.IsKeyDown(Keys.Right))
 			{
 				acceleration = new Vector2(0, 0);
-			}
-
-			/*
-			///////////////////////LINKER KANT CORRECT
-			if (inputHelper.MousePosition.X <= ImpHunter.Screen.X / 2)
-			{
-				barrel.Angle = (float) Math.Atan2(barrel.Position.Y - inputHelper.MousePosition.Y, -1 * (barrel.Position.X - inputHelper.MousePosition.X));
-			} else if(inputHelper.MousePosition.X > ImpHunter.Screen.X/2)
-			{
-				//barrel.Angle = (float) Math.Atan2(barrel.Position.X - inputHelper.MousePosition.X, -1 * (barrel.Position.Y - inputHelper.MousePosition.Y));
-				barrel.Angle = -1 * (float) (Math.Atan2(barrel.Position.Y - inputHelper.MousePosition.Y, -1 * (barrel.Position.X - inputHelper.MousePosition.X)) + 9.42);
-			}
-			*/
-			//barrel.Angle = inputHelper.MousePosition - barrel.Origin;
-			/*if (inputHelper.MousePosition.X <= ImpHunter.Screen.X / 2)
-			{
-				barrel.OffsetDegrees = (float)(Math.Atan2(inputHelper.MousePosition.Y - barrel.Origin.Y, inputHelper.MousePosition.X - barrel.Origin.X) * (180 / 3.14));
-			} else if (inputHelper.MousePosition.X > ImpHunter.Screen.X / 2)
-			{
-				barrel.Angle = (float)(Math.Atan2(inputHelper.MousePosition.Y - barrel.Origin.Y, inputHelper.MousePosition.X - barrel.Origin.X));
-			}*/
-			//barrel.OffsetDegrees = (float)(Math.Atan2(inputHelper.MousePosition.Y - barrel.Position.Y, inputHelper.MousePosition.X - barrel.Position.X) * (180/3.14));
-			//barrel.Angle = (float)Math.Atan2(inputHelper.MousePosition.Y-barrel.Position.Y, inputHelper.MousePosition.X-barrel.Position.X);
-			//barrel.Angle = (float)Math.Atan2(inputHelper.MousePosition.Y,-inputHelper.MousePosition.X);
-			//barrel.Angle = (float)inputHelper.MousePosition;
-			
+			}			
 		}
 
 		/// <summary>

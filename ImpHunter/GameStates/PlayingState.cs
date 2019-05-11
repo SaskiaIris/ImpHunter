@@ -74,6 +74,22 @@ namespace ImpHunter {
 			}
 
 			cannon.Barrel.Angle = (float)(Math.Atan2(rotationVectorBarrel.Y, rotationVectorBarrel.X) + (3.14 / 2));
+
+			foreach(CannonBall bouncyBall in balls.Children)
+			{
+				if(fortress.CollidesWithTowers(bouncyBall) /*|| bouncyBall.Position.Y + bouncyBall.Height > 490*/)
+				{
+					//bouncyBall.Velocity *= -1;
+					bouncyBall.BounceOnWall();
+					//bouncyBall.Position = new Vector2(bouncyBall.Position.X, bouncyBall.Position.Y-1);
+				}
+				if(bouncyBall.Position.Y > 509)
+				{
+					bouncyBall.Acceleration = new Vector2(bouncyBall.Acceleration.X,0);
+					bouncyBall.Velocity = new Vector2(bouncyBall.Velocity.X, 0);
+
+				}
+			}
 		}
 
         /// <summary>

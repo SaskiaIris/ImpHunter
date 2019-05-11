@@ -8,6 +8,7 @@ namespace ImpHunter {
         Cannon cannon;
         Crosshair crosshair;
         Fortress fortress;
+		private GameObjectList balls;
 
         private const int SHOOT_COOLDOWN = 20;
         private int shootTimer = SHOOT_COOLDOWN;
@@ -25,6 +26,8 @@ namespace ImpHunter {
             cannon.Position = new Vector2(GameEnvironment.Screen.X / 2, 490);
 
             Add(fortress = new Fortress());
+
+			Add(balls = new GameObjectList());
 
             // Always draw the crosshair last.
             Add(crosshair = new Crosshair());
@@ -85,7 +88,8 @@ namespace ImpHunter {
             if (inputHelper.MouseLeftButtonPressed() && shootTimer > SHOOT_COOLDOWN) {
                 crosshair.Expand(SHOOT_COOLDOWN);
                 shootTimer = 0;
-            }
+				this.balls.Add(new CannonBall(new Vector2(cannon.Position.X, cannon.Position.Y - cannon.Barrel.Height/2 - 30), rotationVectorBarrel));
+			}
 
 			if(inputHelper.KeyPressed(Keys.Space))
 			{
@@ -104,6 +108,9 @@ namespace ImpHunter {
 				Debug.WriteLine(" ");
 				Debug.WriteLine(" = cannon.Barrel.Angle", cannon.Barrel.Angle.ToString());
 				Debug.WriteLine(" ");*/
+				int i = 0;
+				foreach (CannonBall ballCount in balls.Children) { i++; }
+				Debug.WriteLine(i.ToString());
 			}
 		}
     }

@@ -59,6 +59,7 @@
     <Compile Include="GameManagement\SpriteSheet.cs" />
     <Compile Include="GameManagement\TextGameObject.cs" />
     <Compile Include="GameObjects\Cannon.cs" />
+    <Compile Include="GameObjects\CannonBall.cs" />
     <Compile Include="GameObjects\Crosshair.cs" />
     <Compile Include="GameObjects\Fortress.cs" />
     <Compile Include="GameObjects\PhysicsObject.cs" />

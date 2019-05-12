@@ -77,18 +77,29 @@ namespace ImpHunter {
 
 			foreach(CannonBall bouncyBall in balls.Children)
 			{
-				if(fortress.CollidesWithTowers(bouncyBall) /*|| bouncyBall.Position.Y + bouncyBall.Height > 490*/)
+				foreach(SpriteGameObject toren in fortress.Towers.Children)
+				{
+					bouncyBall.CheckBounce(toren);
+				}
+				bouncyBall.CheckBounce(fortress.Wall);
+				
+				/*bool torenCollision = false;
+				bool grondCollision = false;
+				if(fortress.CollidesWithTowers(bouncyBall) || bouncyBall.Position.Y > 509)
 				{
 					//bouncyBall.Velocity *= -1;
-					bouncyBall.BounceOnWall();
+					if(fortress.CollidesWithTowers(bouncyBall) == true)
+					{
+						torenCollision = true;
+					}
+					if(bouncyBall.Position.Y > 509)
+					{
+						grondCollision = true;
+					}
+					bouncyBall.BounceOnWall(torenCollision, grondCollision);
 					//bouncyBall.Position = new Vector2(bouncyBall.Position.X, bouncyBall.Position.Y-1);
-				}
-				if(bouncyBall.Position.Y > 509)
-				{
-					bouncyBall.Acceleration = new Vector2(bouncyBall.Acceleration.X,0);
-					bouncyBall.Velocity = new Vector2(bouncyBall.Velocity.X, 0);
-
-				}
+				}*/
+				bouncyBall.Update(gameTime);
 			}
 		}
 

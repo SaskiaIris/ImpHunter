@@ -9,14 +9,16 @@ namespace ImpHunter
 {
 	class CannonBall : PhysicsObject
 	{
-		private float speed = 300;
-		private float gravity = 7.1f;
+		private float speed = 450;
+		//private float gravity = 7.1f;
+		private float gravity = 4f;
 		public CannonBall(Vector2 startPosition, Vector2 startingSpeed) : base("spr_cannon_ball")
 		{
 			origin = Center;
 			this.position = startPosition;
 			this.velocity = startingSpeed * speed;
 			this.acceleration = new Vector2(-0.99f, gravity);
+			//this.acceleration = new Vector2(gravity, gravity);
 		}
 
 		public override void HandleInput(InputHelper inputHelper)
@@ -25,16 +27,26 @@ namespace ImpHunter
 			
 		}
 
-		public void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
-			if(this.velocity.X < 0)
+			/*
+			if(this.velocity.X < 1)
 			{
-				this.velocity.X = 0;
 				this.acceleration.X = 0;
-				this.Visible = false;
 			}
+
+			if(this.velocity.Y < 1)
+			{
+				this.acceleration.Y = 0;
+				this.velocity.Y = 0;
+			}
+			
+			if (this.position.Y >= 509)
+			{
+				this.position.Y = 510;
+			}*/
 		}
 
 		public void CheckBounce(SpriteGameObject other)
@@ -46,17 +58,36 @@ namespace ImpHunter
 			switch (side)
 			{
 				case CollisionResult.LEFT:
-					position.X = other.Position.X + other.Width + this.Center.X;
+					position.X = other.Position.X + other.Width + Width;
+					velocity.X *= -1 * 0.7f;
 					break;
 				case CollisionResult.RIGHT:
-					position.X = other.Position.X - this.Center.X;
+					position.X = other.Position.X - Width;
+					velocity.X *= -1 * 0.7f;
+					break;
+				case CollisionResult.TOP:
+					position.Y = other.Position.Y - Height;
+					velocity.Y *= -1 * 0.7f;
 					break;
 			}
 		}
 
-		public void BounceOnWall()
+		/*public void BounceOnWall(bool towerCollision, bool groundCollision)
 		{
-			this.velocity.X *= -0.99f;
-		}
+			this.velocity.X *= 0.99f;
+			this.velocity.Y *= 0.99f;
+
+			if(groundCollision && !towerCollision)
+			{
+				this.velocity.Y *= -1;
+				
+			} else if(towerCollision && !groundCollision)
+			{
+				this.velocity.X *= -1;
+			} else if(towerCollision && groundCollision)
+			{
+				this.velocity *= -1;
+			}
+		}*/
 	}
 }

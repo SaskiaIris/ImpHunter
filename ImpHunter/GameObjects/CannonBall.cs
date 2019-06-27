@@ -69,6 +69,10 @@ namespace ImpHunter
 					position.Y = other.Position.Y - Height;
 					velocity.Y *= -1 * 0.7f;
 					break;
+				case CollisionResult.BOTTOM:
+					position.Y = other.Position.Y - Height;
+					velocity.Y *= -1 * 0.7f;
+					break;
 			}
 		}
 

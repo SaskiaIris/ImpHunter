@@ -12,14 +12,15 @@ namespace ImpHunter
 		private float speed = 450;
 		//private float gravity = 7.1f;
 		private float gravity = 4f;
+		private float[] speedsPerFrames = new float[10];
+		private int previousIndex = 0;
+		private int frameCounter = 0;
+		
 		public CannonBall(Vector2 startPosition, Vector2 startingSpeed) : base("spr_cannon_ball")
 		{
-			//origin = Center;
 			this.position = startPosition;
 			this.velocity = startingSpeed * speed;
-			//this.acceleration = new Vector2(-0.99f, gravity);
 			this.acceleration = new Vector2(0,gravity);
-			//this.acceleration = new Vector2(gravity, gravity);
 		}
 
 		public override void HandleInput(InputHelper inputHelper)
@@ -33,22 +34,21 @@ namespace ImpHunter
 			Console.WriteLine(this.velocity);
 			base.Update(gameTime);
 
-			/*
-			if(this.velocity.X < 1)
+			if(frameCounter % 30 == 0)
 			{
-				this.acceleration.X = 0;
+				speedsPerFrames[previousIndex] = this.velocity.Y;
+				if (previousIndex == speedsPerFrames.Length-1)
+				{
+					previousIndex = 0;
+				}
+				else
+				{
+					previousIndex++;
+				}
+
 			}
-			*/
-			if(this.velocity.Y < 1000 && this.velocity.Y > -1000 && this.position.Y >= 509)
-			{
-				//this.acceleration.Y = 0;
-				this.velocity.Y = 0;
-			}
-			/*
-			if (this.position.Y >= 509)
-			{
-				this.position.Y = 510;
-			}*/
+
+			frameCounter++;
 		}
 
 		public void CheckBounce(SpriteGameObject other)
@@ -78,22 +78,21 @@ namespace ImpHunter
 			}
 		}
 
-		/*public void BounceOnWall(bool towerCollision, bool groundCollision)
+		public float AverageSpeed()
 		{
-			this.velocity.X *= 0.99f;
-			this.velocity.Y *= 0.99f;
+			float averageNumber = 0;
+			int usableValues = 0;
 
-			if(groundCollision && !towerCollision)
+			foreach(float speedValue in speedsPerFrames)
 			{
-				this.velocity.Y *= -1;
-				
-			} else if(towerCollision && !groundCollision)
-			{
-				this.velocity.X *= -1;
-			} else if(towerCollision && groundCollision)
-			{
-				this.velocity *= -1;
+				if(speedValue != 0f)
+				{
+					averageNumber += Math.Abs(speedValue);
+					usableValues++;
+				}
 			}
-		}*/
+
+			return averageNumber / usableValues;
+		}
 	}
 }

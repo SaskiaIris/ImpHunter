@@ -82,23 +82,15 @@ namespace ImpHunter {
 					bouncyBall.CheckBounce(toren);
 				}
 				bouncyBall.CheckBounce(fortress.Wall);
-				
-				/*bool torenCollision = false;
-				bool grondCollision = false;
-				if(fortress.CollidesWithTowers(bouncyBall) || bouncyBall.Position.Y > 509)
+
+				if (bouncyBall.AverageSpeed() < 100 && Math.Abs(bouncyBall.Position.Y + bouncyBall.Height - fortress.Wall.Position.Y) < 3)
 				{
-					//bouncyBall.Velocity *= -1;
-					if(fortress.CollidesWithTowers(bouncyBall) == true)
-					{
-						torenCollision = true;
-					}
-					if(bouncyBall.Position.Y > 509)
-					{
-						grondCollision = true;
-					}
-					bouncyBall.BounceOnWall(torenCollision, grondCollision);
-					//bouncyBall.Position = new Vector2(bouncyBall.Position.X, bouncyBall.Position.Y-1);
-				}*/
+					bouncyBall.Velocity = new Vector2(bouncyBall.Velocity.X, 0);
+					bouncyBall.Acceleration = new Vector2(bouncyBall.Acceleration.X, 0);
+					bouncyBall.Velocity *= 0.99f;
+				}
+
+
 				bouncyBall.Update(gameTime);
 			}
 		}
@@ -115,10 +107,7 @@ namespace ImpHunter {
             if (inputHelper.MouseLeftButtonPressed() && shootTimer > SHOOT_COOLDOWN) {
                 crosshair.Expand(SHOOT_COOLDOWN);
                 shootTimer = 0;
-				//this.balls.Add(new CannonBall(new Vector2(cannon.Position.X, cannon.Position.Y - cannon.Barrel.Height/2 - 30), rotationVectorBarrel));
-				//this.balls.Add(new CannonBall(new Vector2(cannon.Position.X + cannon.Barrel.Angle * cannon.Barrel.Width, cannon.Position.Y + cannon.Barrel.Angle * cannon.Barrel.Height), rotationVectorBarrel));
-				//this.balls.Add(new CannonBall(new Vector2(cannon.Position.X - ((cannon.Barrel.Width/2) / cannon.Barrel.Angle), cannon.Position.Y -((cannon.Barrel.Height/2)/cannon.Barrel.Angle)), rotationVectorBarrel * 0.5f));
-				//this.balls.Add(new CannonBall(cannon.Barrel.GlobalPosition+rotationVectorBarrel*cannon.Barrel.Height,rotationVectorBarrel));
+
 				Vector2 angDirection = new Vector2((float)Math.Cos(cannon.Barrel.Angle-1.57), (float)Math.Sin(cannon.Barrel.Angle-1.57));
 				Vector2 cannonBallPos = cannon.Barrel.GlobalPosition + angDirection * (cannon.Barrel.Height-5);
 				
@@ -130,21 +119,6 @@ namespace ImpHunter {
 
 			if(inputHelper.KeyPressed(Keys.Space))
 			{
-				/*
-				Debug.WriteLine(" = cannon.Position.X", cannon.Position.X.ToString());
-				Debug.WriteLine(" = cannon.Position.Y", cannon.Position.Y.ToString());
-				Debug.WriteLine(" ");
-				Debug.WriteLine(" = inputHelper.MousePosition.X", inputHelper.MousePosition.X.ToString());
-				Debug.WriteLine(" = inputHelper.MousePosition.Y", inputHelper.MousePosition.Y.ToString());
-				Debug.WriteLine(" ");
-				Debug.WriteLine(" = crosshair.Position.X", crosshair.Position.X.ToString());
-				Debug.WriteLine(" = crosshair.Position.Y", crosshair.Position.Y.ToString());
-				Debug.WriteLine(" ");
-				Debug.WriteLine(" = rotationVectorBarrel.X", rotationVectorBarrel.X.ToString());
-				Debug.WriteLine(" = rotationVectorBarrel.Y", rotationVectorBarrel.Y.ToString());
-				Debug.WriteLine(" ");
-				Debug.WriteLine(" = cannon.Barrel.Angle", cannon.Barrel.Angle.ToString());
-				Debug.WriteLine(" ");*/
 				int i = 0;
 				foreach (CannonBall ballCount in balls.Children) { i++; }
 				Debug.WriteLine(i.ToString());

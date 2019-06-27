@@ -9,6 +9,7 @@ namespace ImpHunter {
         Crosshair crosshair;
         Fortress fortress;
 		private GameObjectList balls;
+		private GameObjectList imps;
 
         private const int SHOOT_COOLDOWN = 20;
         private int shootTimer = SHOOT_COOLDOWN;
@@ -28,6 +29,7 @@ namespace ImpHunter {
             Add(fortress = new Fortress());
 
 			Add(balls = new GameObjectList());
+			Add(imps = new GameObjectList());
 
             // Always draw the crosshair last.
             Add(crosshair = new Crosshair());

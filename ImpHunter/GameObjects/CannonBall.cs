@@ -83,16 +83,23 @@ namespace ImpHunter
 			float averageNumber = 0;
 			int usableValues = 0;
 
-			foreach(float speedValue in speedsPerFrames)
+			foreach (float speedValue in speedsPerFrames)
 			{
-				if(speedValue != 0f)
+				if (speedValue != 0f)
 				{
 					averageNumber += Math.Abs(speedValue);
 					usableValues++;
 				}
-			}
 
-			return averageNumber / usableValues;
+			}
+			if (usableValues == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				return averageNumber / usableValues;
+			}
 		}
 	}
 }

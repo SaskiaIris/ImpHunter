@@ -14,10 +14,11 @@ namespace ImpHunter
 		private float gravity = 4f;
 		public CannonBall(Vector2 startPosition, Vector2 startingSpeed) : base("spr_cannon_ball")
 		{
-			origin = Center;
+			//origin = Center;
 			this.position = startPosition;
 			this.velocity = startingSpeed * speed;
-			this.acceleration = new Vector2(-0.99f, gravity);
+			//this.acceleration = new Vector2(-0.99f, gravity);
+			this.acceleration = new Vector2(0,gravity);
 			//this.acceleration = new Vector2(gravity, gravity);
 		}
 
@@ -29,6 +30,7 @@ namespace ImpHunter
 
 		public override void Update(GameTime gameTime)
 		{
+			Console.WriteLine(this.velocity);
 			base.Update(gameTime);
 
 			/*
@@ -36,13 +38,13 @@ namespace ImpHunter
 			{
 				this.acceleration.X = 0;
 			}
-
-			if(this.velocity.Y < 1)
+			*/
+			if(this.velocity.Y < 1000 && this.velocity.Y > -1000 && this.position.Y >= 509)
 			{
-				this.acceleration.Y = 0;
+				//this.acceleration.Y = 0;
 				this.velocity.Y = 0;
 			}
-			
+			/*
 			if (this.position.Y >= 509)
 			{
 				this.position.Y = 510;

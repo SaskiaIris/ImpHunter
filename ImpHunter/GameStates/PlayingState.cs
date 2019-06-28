@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using ImpHunter.GameObjects;
 
 namespace ImpHunter {
     class PlayingState : GameObjectList{
@@ -10,6 +11,7 @@ namespace ImpHunter {
         Fortress fortress;
 		private GameObjectList balls;
 		private GameObjectList imps;
+		private ImpEnemy imp;
 
         private const int SHOOT_COOLDOWN = 20;
         private int shootTimer = SHOOT_COOLDOWN;
@@ -30,6 +32,7 @@ namespace ImpHunter {
 
 			Add(balls = new GameObjectList());
 			Add(imps = new GameObjectList());
+			imps.Add(imp = new ImpEnemy(fortress));
 
             // Always draw the crosshair last.
             Add(crosshair = new Crosshair());
@@ -90,11 +93,23 @@ namespace ImpHunter {
 					bouncyBall.Velocity = new Vector2(bouncyBall.Velocity.X, 0);
 					bouncyBall.Acceleration = new Vector2(bouncyBall.Acceleration.X, 0);
 					bouncyBall.Velocity *= 0.99f;
+					if(bouncyBall.Velocity.X > -1 && bouncyBall.Velocity.X < 1)
+					{
+						bouncyBall.Velocity = new Vector2(0, 0);
+						bouncyBall.Acceleration = new Vector2(0, 0);
+					}
 				}
+				
 
 
 				bouncyBall.Update(gameTime);
 			}
+
+			foreach(ImpEnemy impSelect in imps.Children)
+			{
+				imp.SteerTowards(cannon.Carriage);
+			}
+
 		}
 
         /// <summary>

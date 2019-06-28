@@ -55,12 +55,12 @@ namespace ImpHunter {
 
 			if(inputHelper.IsKeyDown(Keys.A) || inputHelper.IsKeyDown(Keys.Left))
 			{
-				acceleration = new Vector2(-1f, 0);
+				acceleration = new Vector2(-2f, 0);
 			}
 
 			if (inputHelper.IsKeyDown(Keys.D) || inputHelper.IsKeyDown(Keys.Right))
 			{
-				acceleration = new Vector2(1f, 0);
+				acceleration = new Vector2(2f, 0);
 			}
 
 			if(!inputHelper.IsKeyDown(Keys.D) && !inputHelper.IsKeyDown(Keys.A)

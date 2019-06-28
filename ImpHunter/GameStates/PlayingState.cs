@@ -12,6 +12,8 @@ namespace ImpHunter {
 		private GameObjectList balls;
 		private GameObjectList imps;
 		private ImpEnemy imp;
+		private ImpBoss impBoss;
+		private GameObjectList bossSwarm;
 
         private const int SHOOT_COOLDOWN = 20;
         private int shootTimer = SHOOT_COOLDOWN;
@@ -34,8 +36,25 @@ namespace ImpHunter {
 			Add(imps = new GameObjectList());
 			imps.Add(imp = new ImpEnemy(fortress));
 
-            // Always draw the crosshair last.
-            Add(crosshair = new Crosshair());
+			impBoss = new ImpBoss();
+
+			bossSwarm = new GameObjectList();
+			bossSwarm.Add(new ImpEnemy(null, 0.5f));
+			bossSwarm.Children[0].Position = new Vector2(impBoss.Position.X, impBoss.Position.Y + 80);
+
+			bossSwarm.Add(new ImpEnemy(null, 0.5f));
+			bossSwarm.Children[1].Position = new Vector2(impBoss.Position.X - 80, impBoss.Position.Y);
+
+			bossSwarm.Add(new ImpEnemy(null, 0.5f));
+			bossSwarm.Children[2].Position = new Vector2(impBoss.Position.X + 80, impBoss.Position.Y);
+
+			Add(impBoss);
+			Add(bossSwarm);
+
+
+
+			// Always draw the crosshair last.
+			Add(crosshair = new Crosshair());
         }
         
         /// <summary>
@@ -99,24 +118,25 @@ namespace ImpHunter {
 						bouncyBall.Acceleration = new Vector2(0, 0);
 					}
 				}
-				
-
-
 				bouncyBall.Update(gameTime);
 			}
 
 			foreach(ImpEnemy impSelect in imps.Children)
 			{
-				imp.SteerTowards(cannon.Carriage);
+				impSelect.SteerTowards(cannon.Carriage);
 			}
 
+			foreach(ImpEnemy swarmImp in bossSwarm.Children)
+			{
+				swarmImp.SpringTowards(impBoss);
+			}
 		}
 
-        /// <summary>
-        /// Allows the player to shoot after a cooldown.
-        /// </summary>
-        /// <param name="inputHelper"></param>
-        public override void HandleInput(InputHelper inputHelper) {
+		/// <summary>
+		/// Allows the player to shoot after a cooldown.
+		/// </summary>
+		/// <param name="inputHelper"></param>
+		public override void HandleInput(InputHelper inputHelper) {
             base.HandleInput(inputHelper);
 
             shootTimer++;

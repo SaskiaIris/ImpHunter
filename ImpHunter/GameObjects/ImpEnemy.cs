@@ -13,7 +13,7 @@ namespace ImpHunter.GameObjects
 		private float maximumSteering = 15;
 		private float arivalRadius = 200;
 
-		public ImpEnemy(Fortress fort = null) : base("spr_imp_flying")
+		public ImpEnemy(Fortress fort = null, float scale = 1) : base("spr_imp_flying")
 		{
 			if(fort != null)
 			{
@@ -25,6 +25,7 @@ namespace ImpHunter.GameObjects
 
 			Velocity = new Vector2(0, maximumSpeed);
 			mass = 2;
+			Scale = scale;
 		}
 
 		public override void Update(GameTime gameTime)
@@ -61,6 +62,14 @@ namespace ImpHunter.GameObjects
 				}
             }
 		}
+
+		public void SpringTowards(SpriteGameObject other)
+		{
+			float springConstant = 0.7f;
+			Vector2 springForce = (other.GlobalPosition - GlobalPosition) * springConstant;
+			force += springForce;
+		}
+
 
 		private Vector2 Truncate(Vector2 vector, float length)
 		{

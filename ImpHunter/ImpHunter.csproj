@@ -62,6 +62,7 @@
     <Compile Include="GameObjects\CannonBall.cs" />
     <Compile Include="GameObjects\Crosshair.cs" />
     <Compile Include="GameObjects\Fortress.cs" />
+    <Compile Include="GameObjects\ImpBoss.cs" />
     <Compile Include="GameObjects\ImpEnemy.cs" />
     <Compile Include="GameObjects\PhysicsObject.cs" />
     <Compile Include="GameStates\PlayingState.cs" />

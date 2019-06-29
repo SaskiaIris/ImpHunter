@@ -15,12 +15,20 @@ namespace ImpHunter {
 
         private float radians;
 
-        /// <summary>
-        /// Returns / sets the acceleration.
-        /// </summary>
-        public virtual Vector2 Acceleration {
-            get { return acceleration; }
-            set { acceleration = value; }
+		/// <summary>
+		/// Returns / sets the mass.
+		/// </summary>
+		public virtual float Mass {
+			get { return mass; }
+			set { mass = value; }
+		}
+
+		/// <summary>
+		/// Returns / sets the acceleration.
+		/// </summary>
+		public virtual Vector2 Acceleration {
+            get { return force/mass; }
+            set { force = value; }
         }
 
         /// <summary>
@@ -66,6 +74,7 @@ namespace ImpHunter {
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
             Velocity += Acceleration;
+			force = Vector2.Zero;
             base.Update(gameTime);
         }
 

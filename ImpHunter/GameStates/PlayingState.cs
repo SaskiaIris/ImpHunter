@@ -23,21 +23,29 @@ namespace ImpHunter {
         /// PlayingState constructor which adds the different gameobjects and lists in the correct order of drawing.
         /// </summary>
         public PlayingState() {
+			//Rotatie vector van de barrel
 			rotationVectorBarrel = new Vector2();
 
+			//Achtergrond
             Add(new SpriteGameObject("spr_background"));
 
+			//Kanon
             Add(cannon = new Cannon());
             cannon.Position = new Vector2(GameEnvironment.Screen.X / 2, 490);
 
+			//Fortress
             Add(fortress = new Fortress());
 
+			//Kanonskogels
 			Add(balls = new GameObjectList());
+			//Gewone imps
 			Add(imps = new GameObjectList());
 			imps.Add(imp = new ImpEnemy(fortress));
 
+			//De grote imp
 			impBoss = new ImpBoss();
 
+			//De drie kleine imps die om de grote imp heen cirkelen
 			bossSwarm = new GameObjectList();
 			bossSwarm.Add(new ImpEnemy(null, 0.5f));
 			bossSwarm.Children[0].Position = new Vector2(impBoss.Position.X, impBoss.Position.Y + 80);
@@ -48,10 +56,9 @@ namespace ImpHunter {
 			bossSwarm.Add(new ImpEnemy(null, 0.5f));
 			bossSwarm.Children[2].Position = new Vector2(impBoss.Position.X + 80, impBoss.Position.Y);
 
+			//Toevoegen van de grote imp en de kleine imps
 			Add(impBoss);
 			Add(bossSwarm);
-
-
 
 			// Always draw the crosshair last.
 			Add(crosshair = new Crosshair());
@@ -64,11 +71,13 @@ namespace ImpHunter {
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
 
+			//Checken of het kanon een collision heeft met de torens
 			if(fortress.CollidesWithTowers(cannon.Carriage))
 			{
 				cannon.Velocity *= -0.99f;
 			}
 
+			//Het volgen van de crosshair/cursor door de barrel van het kanon
 			if (crosshair.Position.X >= cannon.Position.X && crosshair.Position.Y < cannon.Position.Y)
 			{
 				//EERSTE KWADRANT
@@ -99,6 +108,8 @@ namespace ImpHunter {
 
 			cannon.Barrel.Angle = (float)(Math.Atan2(rotationVectorBarrel.Y, rotationVectorBarrel.X) + (3.14 / 2));
 
+
+			//In deze methode wordt er gecheckt of een kanonskogel met iets collide en hoe hij moet stuiteren
 			foreach(CannonBall bouncyBall in balls.Children)
 			{
 				foreach(SpriteGameObject toren in fortress.Towers.Children)
@@ -121,11 +132,13 @@ namespace ImpHunter {
 				bouncyBall.Update(gameTime);
 			}
 
+			//De gewone imps moeten achter het kanon aanvliegen
 			foreach(ImpEnemy impSelect in imps.Children)
 			{
 				impSelect.SteerTowards(cannon.Carriage);
 			}
 
+			//De mini imps moeten om de grote imp heen cirkelen
 			foreach(ImpEnemy swarmImp in bossSwarm.Children)
 			{
 				swarmImp.SpringTowards(impBoss);
@@ -139,6 +152,7 @@ namespace ImpHunter {
 		public override void HandleInput(InputHelper inputHelper) {
             base.HandleInput(inputHelper);
 
+			//Het schieten van de kogels met de linkermuisknop
             shootTimer++;
 
             if (inputHelper.MouseLeftButtonPressed() && shootTimer > SHOOT_COOLDOWN) {
@@ -154,12 +168,13 @@ namespace ImpHunter {
 				this.balls.Add(new CannonBall(cannonBallPos, direction));
 			}
 
-			if(inputHelper.KeyPressed(Keys.Space))
+			//Debug voor het tellen van de hoeveelheid kogels
+			/*if(inputHelper.KeyPressed(Keys.Space))
 			{
 				int i = 0;
 				foreach (CannonBall ballCount in balls.Children) { i++; }
 				Debug.WriteLine(i.ToString());
-			}
+			}*/
 		}
     }
 }

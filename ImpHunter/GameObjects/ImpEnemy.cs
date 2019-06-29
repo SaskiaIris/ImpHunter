@@ -15,6 +15,7 @@ namespace ImpHunter.GameObjects
 
 		public ImpEnemy(Fortress fort = null, float scale = 1) : base("spr_imp_flying")
 		{
+			//Zorgen dat de imp binnen de torens van het fort begint
 			if(fort != null)
 			{
 				SpriteGameObject towerOne = (SpriteGameObject) fort.Towers.Children[0];
@@ -33,6 +34,7 @@ namespace ImpHunter.GameObjects
 			base.Update(gameTime);
 		}
 
+		//Hiermee zoekt en gaat de imp naar het kanon
 		public void SteerTowards(SpriteGameObject other)
 		{
 			Vector2 targetPosition = new Vector2((other.GlobalPosition.X - other.Width / 2), other.GlobalPosition.Y - other.Height / 2);
@@ -63,6 +65,7 @@ namespace ImpHunter.GameObjects
             }
 		}
 
+		//Hiermee cirkelen de kleine imps om de grote imp heen
 		public void SpringTowards(SpriteGameObject other)
 		{
 			float springConstant = 0.7f;
@@ -70,7 +73,7 @@ namespace ImpHunter.GameObjects
 			force += springForce;
 		}
 
-
+		//Truncate functie waardoor de vector niet langer dan een bepaalde lengte kan worden
 		private Vector2 Truncate(Vector2 vector, float length)
 		{
 			if(vector.LengthSquared() > length * length)

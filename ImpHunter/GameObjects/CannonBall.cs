@@ -10,7 +10,6 @@ namespace ImpHunter
 	class CannonBall : PhysicsObject
 	{
 		private float speed = 450;
-		//private float gravity = 7.1f;
 		private float gravity = 4f;
 		private float[] speedsPerFrames = new float[10];
 		private int previousIndex = 0;
@@ -20,7 +19,7 @@ namespace ImpHunter
 		{
 			this.position = startPosition;
 			this.velocity = startingSpeed * speed;
-			this.acceleration = new Vector2(0,gravity);
+			this.acceleration = new Vector2(0, gravity);
 		}
 
 		public override void HandleInput(InputHelper inputHelper)
@@ -31,9 +30,11 @@ namespace ImpHunter
 
 		public override void Update(GameTime gameTime)
 		{
-			Console.WriteLine(this.velocity);
+			//Debug voor de velocity
+			//Console.WriteLine(this.velocity);
 			base.Update(gameTime);
 
+			//Opslaan van de velocity's in een array
 			if(frameCounter % 30 == 0)
 			{
 				speedsPerFrames[previousIndex] = this.velocity.Y;
@@ -51,6 +52,7 @@ namespace ImpHunter
 			frameCounter++;
 		}
 
+		//De bounce van de kanonskogel
 		public void CheckBounce(SpriteGameObject other)
 		{
 			if (!this.CollidesWith(other)) return;
@@ -80,6 +82,7 @@ namespace ImpHunter
 
 		public float AverageSpeed()
 		{
+			//Hiermee wordt het gemiddelde van de velocity's uit de array berekend
 			float averageNumber = 0;
 			int usableValues = 0;
 

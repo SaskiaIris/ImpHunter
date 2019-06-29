@@ -38,6 +38,7 @@ namespace ImpHunter {
 
 			//Kanonskogels
 			Add(balls = new GameObjectList());
+
 			//Gewone imps
 			Add(imps = new GameObjectList());
 			imps.Add(imp = new ImpEnemy(fortress));

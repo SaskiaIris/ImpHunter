@@ -53,6 +53,7 @@ namespace ImpHunter {
         public override void HandleInput(InputHelper inputHelper) {
             base.HandleInput(inputHelper);
 
+			//Besturing van het kanon met de pijltjes en A/D-toetsen
 			if(inputHelper.IsKeyDown(Keys.A) || inputHelper.IsKeyDown(Keys.Left))
 			{
 				acceleration = new Vector2(-2f, 0);
@@ -80,6 +81,7 @@ namespace ImpHunter {
 			velocity += acceleration;
 			velocity *= friction;
 
+			//Stilzetten van het kanon als de snelheid onder/boven een bepaalde waarde komt
 			if (velocity.X < 10 && acceleration.X == 0 && velocity.X > -10)
 			{
 				velocity.X = 0;

@@ -65,7 +65,7 @@ namespace ImpHunter.GameObjects
             }
 		}
 
-		//Hiermee cirkelen de kleine imps om de grote imp heen
+		//Hiermee springen/cirkelen de kleine imps om de grote imp heen
 		public void SpringTowards(SpriteGameObject other)
 		{
 			float springConstant = 0.7f;

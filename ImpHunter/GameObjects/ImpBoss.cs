@@ -20,6 +20,7 @@ namespace ImpHunter.GameObjects
 			Position = new Vector2(GameEnvironment.Screen.X / 2, 50);
 			mass = 1;
 
+			//Waypoints waar de boss heen gaat
 			waypoints[0] = new Vector2(158, 30);
 			waypoints[1] = new Vector2(650, 100);
 			waypoints[2] = new Vector2(400, 50);
@@ -30,6 +31,7 @@ namespace ImpHunter.GameObjects
 		{
 			base.Update(gameTime);
 
+			//Het sturen tussen de verschillende waypoints
 			if (SteerToPoint(waypoints[currentWayPoint])) {
 				currentWayPoint++;
 			}
@@ -41,6 +43,7 @@ namespace ImpHunter.GameObjects
 
 		}
 
+		//De functie die de impBoss naar de waypoints laat gaan en laat wisselen als hij dichtbij een waypoint komt
 		public bool SteerToPoint(Vector2 other)
 		{
 			Vector2 targetPosition = new Vector2(other.X, other.Y);
@@ -78,6 +81,7 @@ namespace ImpHunter.GameObjects
 			return false;
 		}
 
+		//Truncate functie waardoor de vector niet langer dan een bepaalde lengte kan worden
 		private Vector2 Truncate(Vector2 vector, float length)
 		{
 			if (vector.LengthSquared() > length * length)
